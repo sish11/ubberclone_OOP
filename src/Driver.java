@@ -42,6 +42,10 @@ public class Driver extends Person {
     public String getlicenseID(){
         return  this.licenseID;
     }
+
+    public String toString(){
+        return super.toString() + " and I am a driver";
+    }
     
     
     
