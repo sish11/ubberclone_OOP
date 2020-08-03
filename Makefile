@@ -10,7 +10,8 @@ BINDIR = bin
 DOCDIR = doc
 TESTDIR = test
 
-JUNIT = ../junit/junit-4.12.jar -sourcepath ./src ./src/$*.java
+JUNIT = ./gson/gson-2.8.6.jar -sourcepath ./src ./src/$*.java
+
 
 JAVAC = javac
 JFLAGS = -g -d $(BINDIR) -cp $(BINDIR)
@@ -26,7 +27,7 @@ vpath %.class $(BINDIR)
 	$(JAVAC) $(JFLAGS) $<
 
 classes: Person.class Car.class Driver.class Vehicle.class Passenger.class \
-		UberApp.class
+		UberApp.class Ride.class UberRide.class
 
 default: $(CLASSES)
 
@@ -34,7 +35,7 @@ doc:
 	javadoc -d $(DOCDIR) -cp $(DOCDIR) $(SRCDIR)/*.java
 
 test_classes: Person.class Car.class Driver.class Vehicle.class Passenger.class \
-			UberApp.class
+			UberApp.class Ride.class UberRide.class
 	      
 junit: test_classes
 	
@@ -49,6 +50,12 @@ Vehicle.class: Vehicle.java
 Passenger.class: Passenger.java
 	javac -d $(BINDIR) -cp $(JUNIT)
 UberApp.class: UberApp.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Ride.class: Ride.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+UberRide.class: UberRide.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Test.class: Test.java
 	javac -d $(BINDIR) -cp $(JUNIT)
 
 
