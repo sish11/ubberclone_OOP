@@ -25,18 +25,24 @@ vpath %.class $(BINDIR)
 .java.class:
 	$(JAVAC) $(JFLAGS) $<
 
-classes: Person.class 
+classes: Person.class Car.class Driver.class Vehicle.class
 
 default: $(CLASSES)
 
 doc:
 	javadoc -d $(DOCDIR) -cp $(DOCDIR) $(SRCDIR)/*.java
 
-test_classes: Person.class 
+test_classes: Person.class Car.class Driver.class Vehicle.class
 	      
 junit: test_classes
 	
 Person.class: Person.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Car.class: Car.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Driver.class: Driver.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Vehicle.class: Vehicle.java
 	javac -d $(BINDIR) -cp $(JUNIT)
 
 
