@@ -14,7 +14,7 @@
     //methods that can be overriden
     public abstract double calculateDistance(String startingPoint, String endingPoint);
     public abstract void assignDriver();
-    public abstract double calculateCost();
+    public abstract double calculateCost(String startingPoint, String endingPoint);
     public abstract void completePayment();
 
  }

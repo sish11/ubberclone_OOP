@@ -24,6 +24,11 @@ public class Car implements Vehicle {
     public String getNumberPlate() {
         return this.numberPlate;
     }
+
+    public double getBaseRate() {
+        return this.base_rate;
+    }
+
     public String getColor() {
         return this.color;
     }

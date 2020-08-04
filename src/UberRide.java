@@ -21,9 +21,12 @@ public class UberRide extends Ride {
     double rate;
     Driver driver;
     Passenger passenger;
+    double distance;
 
 
-    UberRide(String startpoint, String endpoint, double price,Driver driver,Passenger passenger){
+    UberRide() {}
+
+    UberRide(String startpoint, String endpoint, Driver driver,Passenger passenger){
         super();
         this.startpoint = startpoint;
         this.endpoint = endpoint;
@@ -34,24 +37,48 @@ public class UberRide extends Ride {
     }
 
     public double calculateDistance(String startingPoint, String endingPoint) {
-        return 12.0;
+        double distance = 0.0;
+        try {
+            UberRide uberRide = new UberRide();
+            distance = uberRide.MyGETRequest(startingPoint, endingPoint);
+        }
+        catch(IOException ex){
+            System.out.println (ex.toString());
+        }
+
+        this.distance = distance/1000;
+        System.out.println("The distance is: " + this.distance);
+        return (distance/1000);
     }
+
     public void assignDriver() {
         
     }
-    public double calculateCost() {
-        return 12.00;
+
+    public double calculateCost(String startingPoint, String endingPoint) {
+
+        double cost = 0.0;
+        UberRide uberRide = new UberRide();
+        double distance = uberRide.calculateDistance(startingPoint, endingPoint);
+        cost = distance * this.driver.getCar().getBaseRate();
+        this.price = cost;
+        System.out.println("The cost is: " + (int)this.price);
+        return cost;
     }
     public void completePayment() {
 
     }
 
-    public static void MyGETRequest() throws IOException {
-        URL urlForGetRequest = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=uct,SA&destinations=canalwalkshoppingcentre,SA&departure_time=now&key=AIzaSyCs2UIPeA_ygj6aDL45ta9ZdJu3Mo1PIOs");
+    public double MyGETRequest(String startingPoint, String endingPoint) throws IOException {
+        URL urlForGetRequest = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + startingPoint +",SA&destinations=" + endingPoint + ",SA&departure_time=now&key=AIzaSyCs2UIPeA_ygj6aDL45ta9ZdJu3Mo1PIOs");
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
         conection.setRequestMethod("GET");
         int responseCode = conection.getResponseCode();
+
+
+        UberRide uberRide = new UberRide();
+        double distance = 0.0;
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(conection.getInputStream()));
@@ -61,10 +88,17 @@ public class UberRide extends Ride {
             } in .close();
             // print result
             // System.out.println("JSON String Result " + response.toString());
-            retrieveDistanceAsString(response.toString());
+            String distanceAsString = uberRide.retrieveDistanceAsString(response.toString());
+            distance = Double.parseDouble(distanceAsString);
         } else {
+            // response = error;
             System.out.println("GET NOT WORKED");
         }
+
+        
+        
+
+        return distance;
     }
 
     /**
@@ -73,7 +107,7 @@ public class UberRide extends Ride {
      * getAsJsonObject
      * getAsJsonArray
      */
-    public static void retrieveDistanceAsString(String jsonString) {
+    public String retrieveDistanceAsString(String jsonString) {
         GsonBuilder builder = new GsonBuilder(); 
         builder.setPrettyPrinting(); 
         Gson gson = builder.create(); 
@@ -92,10 +126,17 @@ public class UberRide extends Ride {
              je = iterator.next();
              jsonObject = je.getAsJsonObject().get("distance").getAsJsonObject();
              System.out.println(jsonObject.get("value"));
-         }
-    }
 
-    public static void main(String[] args) throws IOException {
-        MyGETRequest();
+            //  try {
+            //     jsonObject = je.getAsJsonObject().get("distance").getAsJsonObject();
+            //  }
+            //  catch(Exception e) {
+
+            //  }
+         }
+
+         return jsonObject.get("value")+"";
+
+
     }
 }
