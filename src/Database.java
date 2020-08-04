@@ -26,7 +26,7 @@ public class Database {
             System.out.println("Error: " + e.toString());
         }
 
-        System.out.println("Number of lines in the file: " + (i+1));
+        // System.out.println("Number of lines in the file: " + (i+1));
         return i;
     }
 
@@ -82,8 +82,6 @@ public class Database {
     }
 
     public Driver[] getArrayByVehicleType(String vehicleType) {
-        System.out.println(this.numberOfX);
-        System.out.println(this.numberOfXL);
 
         Driver[] Xdrivers = new Driver[this.numberOfX];
         Driver[] XLdrivers = new Driver[this.numberOfXL];
@@ -100,9 +98,6 @@ public class Database {
                 xlindex++;
             }
         }
-
-        System.out.println(Xdrivers.length);
-        System.out.println(XLdrivers.length);
 
         if(vehicleType.equals("X")) {
             return Xdrivers;

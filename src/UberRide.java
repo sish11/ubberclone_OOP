@@ -26,19 +26,19 @@ public class UberRide extends Ride {
 
     UberRide() {}
 
-    UberRide(String startpoint, String endpoint, Driver driver,Passenger passenger){
+    UberRide(String startpoint, String endpoint, Passenger passenger){
         super();
         this.startpoint = startpoint;
         this.endpoint = endpoint;
         this.price = price;
         this.rate = rate;
-        this.driver = driver;
+        this.driver = null;
         this.passenger = passenger;
     }
 
    
 
-    public void assignDriver() {
+    public Driver assignDriver() {
         //connect to database and fetch list of drivers DB
         //call the function that takes X/XL - from user
             /**
@@ -53,12 +53,30 @@ public class UberRide extends Ride {
         Database DB = new Database();
         DB.getDriversArray();
         Driver[] drivers = DB.getArrayByVehicleType("XL");
-        DB.printArray(drivers);
+        // DB.printArray(drivers);
 
+        Random ran = new Random();
+        int randomIndex = ran.nextInt(drivers.length-1);
+
+        this.driver = drivers[randomIndex];
+        
+        return drivers[randomIndex];
     }
     
-    public void completePayment() {
+    public void completePayment(Driver driver, Passenger passenger) {
+       /**
+        * Add money to driver
+        * Deduct money from passenger
+        */
 
+        
+        double driverBalance = driver.getCash();
+        driver.setCash(driverBalance + this.price);
+        System.out.println("Adding R" + (int)this.price + " to driver account. Account bal: R" + driver.getCash());
+
+        double passengerBalance = passenger.getCash();
+        passenger.setCash(passengerBalance - this.price);
+        System.out.println("Deducting R" + (int)this.price + " from passenger account. Account bal: R" + passenger.getCash());
     }
 
     public double calculateDistance(String startingPoint, String endingPoint) {
@@ -72,7 +90,7 @@ public class UberRide extends Ride {
         }
 
         this.distance = distance/1000;
-        System.out.println("The distance is: " + this.distance);
+        System.out.println("The distance is: " + this.distance + " km");
         return (distance/1000);
     }
     public double calculateCost(String startingPoint, String endingPoint) {
@@ -82,7 +100,7 @@ public class UberRide extends Ride {
         double distance = uberRide.calculateDistance(startingPoint, endingPoint);
         cost = distance * this.driver.getCar().getBaseRate();
         this.price = cost;
-        System.out.println("The cost is: " + (int)this.price);
+        System.out.println("The cost is: R" + (int)this.price);
         return cost;
     }
     public double MyGETRequest(String startingPoint, String endingPoint) throws IOException {
@@ -140,7 +158,7 @@ public class UberRide extends Ride {
          while(iterator.hasNext()) {
              je = iterator.next();
              jsonObject = je.getAsJsonObject().get("distance").getAsJsonObject();
-             System.out.println(jsonObject.get("value"));
+            //  System.out.println(jsonObject.get("value"));
 
             //  try {
             //     jsonObject = je.getAsJsonObject().get("distance").getAsJsonObject();

@@ -5,19 +5,17 @@ public class UberApp {
     public static void main(String[] args) {
         System.out.println("Welcome to Uber App");
 
-        Passenger lonwabo = new Passenger("lonwabo@gmail.com", "Lonwabo", "Mvovo","0731223283", 12000);
-        Car bmw = new Car("KA1234", "black", "BMW X5", "XL");
-        Driver sam = new Driver(bmw, "LICENSE12345", "Sam", "Surname","0731281283", 1000);
+        Passenger lonwabo = new Passenger("lonwabo@gmail.com", "Lonwabo", "Mvovo","0731223283", 12000);        
         
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your current starting location");
-        String startPoint = "uct"; //sc.nextLine();
+        String startPoint = sc.nextLine();
 
         System.out.println("Please enter your final destination location");
-        String endPoint = "uwc"; //sc.nextLine();
+        String endPoint = sc.nextLine();
 
         System.out.println("Please vehicle of your choice, either XL or X");
-        String vehicleType = "X"; //sc.nextLine();
+        String vehicleType = sc.nextLine();
         
         System.out.print("Starting Point: ");
         System.out.print(startPoint);
@@ -27,11 +25,20 @@ public class UberApp {
         System.out.print(vehicleType);
         System.out.println("");
 
-        UberRide uberRide = new UberRide(startPoint, endPoint, sam, lonwabo);
-        uberRide.calculateCost(startPoint, endPoint);
-        uberRide.assignDriver();
-        
+        UberRide uberRide = new UberRide(startPoint, endPoint, lonwabo);
 
+        Driver assignedDriver = uberRide.assignDriver();
+
+        System.out.println("\nCalculating cost...");
+        uberRide.calculateCost(startPoint, endPoint);
+        
+        System.out.println("\nFinding you a driver...");
+        System.out.println("Assigned driver: " + assignedDriver.getName() + " " + assignedDriver.getSurname());
+        System.out.println("Assigned car: " + assignedDriver.getCar());
+        
+        System.out.println("\nYour ride is complete. Processing payment...");
+        uberRide.completePayment(assignedDriver, lonwabo);
+        
 
         
         
