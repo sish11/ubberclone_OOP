@@ -11,24 +11,25 @@ public class UberApp {
         
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your current starting location");
-        String startPoint = sc.nextLine();
+        String startPoint = "uct"; //sc.nextLine();
 
         System.out.println("Please enter your final destination location");
-        String endPoint = sc.nextLine();
+        String endPoint = "uwc"; //sc.nextLine();
 
-        // System.out.println("Please vehicle of your choice, either XL or X");
-        // String vehicleType = sc.nextLine();
+        System.out.println("Please vehicle of your choice, either XL or X");
+        String vehicleType = "X"; //sc.nextLine();
         
         System.out.print("Starting Point: ");
         System.out.print(startPoint);
         System.out.print("\nEnd Point: ");
         System.out.print(endPoint);
-        // System.out.print("\nVehicle Type: ");
-        // System.out.print(vehicleType);
+        System.out.print("\nVehicle Type: ");
+        System.out.print(vehicleType);
         System.out.println("");
 
         UberRide uberRide = new UberRide(startPoint, endPoint, sam, lonwabo);
         uberRide.calculateCost(startPoint, endPoint);
+        uberRide.assignDriver();
         
 
 

@@ -36,6 +36,10 @@ public class Car implements Vehicle {
         return this.model;
     }
 
+    public String getVehicleType() {
+        return this.type;
+    }
+
     public String toString() {
         return this.model + " car of " + this.color + " color, with number plate: " + this.numberPlate;
     }

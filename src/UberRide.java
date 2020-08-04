@@ -36,6 +36,31 @@ public class UberRide extends Ride {
         this.passenger = passenger;
     }
 
+   
+
+    public void assignDriver() {
+        //connect to database and fetch list of drivers DB
+        //call the function that takes X/XL - from user
+            /**
+             * read data from csv
+             * create car object using last 4 columns
+             * create driver object using first 5 columns
+             * add driver to Driver[]
+             */
+
+        //call the function that return random driver
+
+        Database DB = new Database();
+        DB.getDriversArray();
+        Driver[] drivers = DB.getArrayByVehicleType("XL");
+        DB.printArray(drivers);
+
+    }
+    
+    public void completePayment() {
+
+    }
+
     public double calculateDistance(String startingPoint, String endingPoint) {
         double distance = 0.0;
         try {
@@ -50,11 +75,6 @@ public class UberRide extends Ride {
         System.out.println("The distance is: " + this.distance);
         return (distance/1000);
     }
-
-    public void assignDriver() {
-        
-    }
-
     public double calculateCost(String startingPoint, String endingPoint) {
 
         double cost = 0.0;
@@ -65,10 +85,6 @@ public class UberRide extends Ride {
         System.out.println("The cost is: " + (int)this.price);
         return cost;
     }
-    public void completePayment() {
-
-    }
-
     public double MyGETRequest(String startingPoint, String endingPoint) throws IOException {
         URL urlForGetRequest = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + startingPoint +",SA&destinations=" + endingPoint + ",SA&departure_time=now&key=AIzaSyCs2UIPeA_ygj6aDL45ta9ZdJu3Mo1PIOs");
         String readLine = null;
@@ -100,7 +116,6 @@ public class UberRide extends Ride {
 
         return distance;
     }
-
     /**
      * converts jsonstring to gson object, then it returns the text length
      * can access elements using: 
