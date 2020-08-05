@@ -1,6 +1,4 @@
 # Makefile 
-# Akhil Boddu
-
 # A simple Makefile
 # HelloWorld.class: HelloWorld.java
 # javac HelloWorld.java
